@@ -16,7 +16,19 @@ paramedicine students.
    pnpm install
    ```
 
-2. **Start development server**
+2. **Setup environment variables**
+
+   Create a `.env.local` file in the root directory and add your Supabase credentials:
+
+   ```bash
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+   **Note**: Sign in with Google requires adding `VITE_SUPABASE_URL` and
+   `VITE_SUPABASE_ANON_KEY` to `.env.local`
+
+3. **Start development server**
 
    ```bash
    pnpm dev
@@ -24,7 +36,7 @@ paramedicine students.
 
    The app will be available at `http://localhost:5173`
 
-3. **Run tests**
+4. **Run tests**
 
    ```bash
    pnpm test
@@ -49,6 +61,7 @@ paramedicine students.
 - **Testing**: Vitest + Testing Library
 - **Linting**: ESLint + Prettier
 - **Pre-commit**: Lefthook
+- **Auth**: Supabase Auth with Google OAuth
 
 ## 🎨 Brand Themes
 

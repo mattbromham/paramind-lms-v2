@@ -1,26 +1,27 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-// Get environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+import type { Database } from '@/types/supabase';
 
-// Validate environment variables
-if (!supabaseUrl) {
-  throw new Error('Missing VITE_SUPABASE_URL environment variable');
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
+const SUPABASE_ANON = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+
+if (!SUPABASE_URL || !SUPABASE_ANON) {
+  throw new Error('Missing Supabase env vars');
 }
 
-if (!supabaseAnonKey) {
-  throw new Error('Missing VITE_SUPABASE_ANON_KEY environment variable');
-}
+let browserClient: SupabaseClient<Database> | null = null;
 
-// Create and export the Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true,
-  },
-});
-
-// Export the client type for use in other files
-export type SupabaseClient = typeof supabase;
+/** Call in components – returns the right client for the current environment */
+export const getSupabase = (): SupabaseClient<Database> => {
+  if (typeof window === 'undefined') {
+    // SSR/request scope
+    return createClient<Database>(SUPABASE_URL, SUPABASE_ANON, {
+      auth: { persistSession: false },
+    });
+  }
+  // Browser singleton
+  if (!browserClient) {
+    browserClient = createClient<Database>(SUPABASE_URL, SUPABASE_ANON);
+  }
+  return browserClient;
+};

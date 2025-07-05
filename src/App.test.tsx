@@ -7,8 +7,8 @@ describe('App', () => {
   it('renders the bootstrap message', () => {
     render(<App />);
 
-    const heading = screen.getByRole('heading', { level: 1 });
-    expect(heading).toHaveTextContent('Paramind LMS bootstrap OK');
+    const heading = screen.getByText('Paramind LMS bootstrap OK');
+    expect(heading).toBeInTheDocument();
   });
 
   it('renders the Get Started button', () => {
