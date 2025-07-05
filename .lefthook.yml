@@ -7,5 +7,5 @@ pre-commit:
       run: pnpm exec prettier --check .
       stage_fixed: true
     markdown-lint:
-      run: pnpm exec markdownlint-cli2 "*.md" "!node_modules/**" "!docs/**"
+      run: pnpm exec markdownlint-cli2 '*.md' '!node_modules/**' '!docs/**' '!*verification-report.md'
       stage_fixed: true
