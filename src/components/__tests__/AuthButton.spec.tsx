@@ -54,7 +54,7 @@ describe('AuthButton', () => {
 
     const signInButton = screen.getByRole('button', { name: /sign in/i });
     expect(signInButton).toBeInTheDocument();
-    expect(signInButton).toHaveClass('bg-pm-primary');
+    expect(signInButton).toHaveClass('bg-primary');
   });
 
   it('renders Sign Out button and email when authenticated', () => {

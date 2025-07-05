@@ -1,0 +1,21 @@
+/* Night Study – default */
+:root {
+  --pm-bg: 14 15 23;
+  --pm-surface: 27 29 41;
+  --pm-primary: 115 107 254; /* #736BFE */
+  --pm-secondary: 255 182 110;
+  --pm-border: 255 255 255 / 0.08;
+  --pm-text-high: 255 255 255 / 0.95;
+  --pm-text-low: 255 255 255 / 0.68;
+}
+
+/* Day Study theme toggle */
+[data-theme='day'] {
+  --pm-bg: 245 247 249;
+  --pm-surface: 255 255 255;
+  --pm-primary: 46 95 92; /* #2E5F5C */
+  --pm-secondary: 75 79 116;
+  --pm-border: 229 231 235;
+  --pm-text-high: 17 24 39;
+  --pm-text-low: 55 65 81;
+}

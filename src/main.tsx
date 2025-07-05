@@ -1,4 +1,4 @@
-import './lib/tokens.css';
+import './styles/tokens.css';
 import './index.css';
 
 import React from 'react';

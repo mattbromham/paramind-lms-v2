@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { getSupabase } from '@/lib/supabase';
+import { buttonVariants } from '@/lib/theme';
 import { useSession } from '@/providers/AuthProvider';
 
 import SignInDialog from './SignInDialog';
@@ -18,10 +19,14 @@ export default function AuthButton() {
   if (session) {
     return (
       <div className="flex items-center gap-2">
-        <Button variant="ghost" onClick={handleSignOut} aria-label="Sign out">
+        <Button
+          className={buttonVariants.ghost}
+          onClick={handleSignOut}
+          aria-label="Sign out"
+        >
           Sign out
         </Button>
-        <span className="text-sm text-pm-text-low ml-2">
+        <span className="text-sm text-text-low ml-2">
           ({session.user.email})
         </span>
       </div>
@@ -31,8 +36,7 @@ export default function AuthButton() {
   return (
     <>
       <Button
-        variant="default"
-        className="bg-pm-primary text-white"
+        className={buttonVariants.primary}
         onClick={() => setSignInOpen(true)}
         aria-haspopup="dialog"
       >

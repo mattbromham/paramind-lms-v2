@@ -69,3 +69,20 @@ paramedicine students.
 - **Day Study** (light theme)
 
 Brand fonts: Cormorant Garamond (headings) + Inter (body)
+
+### Theme Tokens
+
+The design system uses CSS custom properties for consistent theming across components:
+
+| Token      | CSS Variable     | Tailwind Class                   | Purpose                |
+| ---------- | ---------------- | -------------------------------- | ---------------------- |
+| Background | `--pm-bg`        | `bg-bg`                          | Main background color  |
+| Surface    | `--pm-surface`   | `bg-surface`                     | Card/panel backgrounds |
+| Primary    | `--pm-primary`   | `bg-primary`, `text-primary`     | Primary brand          |
+| Secondary  | `--pm-secondary` | `bg-secondary`, `text-secondary` | Secondary              |
+| Border     | `--pm-border`    | `border-border`                  | Border colors          |
+| Text High  | `--pm-text-high` | `text-text-high`                 | High contrast text     |
+| Text Low   | `--pm-text-low`  | `text-text-low`                  | Lower contrast text    |
+
+**Theme Switching**: Press `Shift+D` to toggle between Night/Day themes
+(temporary shortcut for QA).
