@@ -1,0 +1,11 @@
+pre-commit:
+  commands:
+    lint:
+      run: pnpm lint
+      stage_fixed: true
+    format-check:
+      run: pnpm exec prettier --check .
+      stage_fixed: true
+    markdown-lint:
+      run: pnpm exec markdownlint-cli2 "*.md" "!node_modules/**" "!docs/**"
+      stage_fixed: true

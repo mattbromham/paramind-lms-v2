@@ -1,0 +1,110 @@
+#### **1\. High-Level Goal**
+
+Stand up the **initial Paramind LMS frontend repository** so that **`pnpm dev`** starts a working Vite \+ React 18 \+ TypeScript app with Tailwind and shadcn/ui, and **`pnpm test`** runs a passing Vitest suite. Everything must align with the tech stack, brand tokens, and quality gates defined in the project brief, roadmap, and brand blueprint.
+
+---
+
+#### **2\. Baselines & Constraints**
+
+| Area | Requirement |
+| ----- | ----- |
+| **Package manager** | **pnpm** v9+. Provide lock-file and set `engine` fields for Node ≥ 20\. |
+| **Framework** | **Vite** (latest 5.x) \+ **React 18.x** \+ **TypeScript 5.x**. |
+| **Styling** | Tailwind CSS with `@tailwindcss/typography`. Add the **brand colour tokens** (`--pm-*`) for Night & Day themes to `tailwind.config.ts`. |
+| **UI components** | Install **shadcn/ui** (Radix Primitives underneath). Run `npx shadcn-ui@latest init` and choose **Tailwind**, **app router \= false**, **import alias @/**. |
+| **Lint / Formatting** | ESLint (typescript, react-hooks, tailwindcss, prettier plugins) \+ Prettier 3\. Create a single **`.eslintrc.cjs`** extending `eslint-config-turbo` style rules; keep Prettier standalone. |
+| **Tests** | **Vitest** \+ `@testing-library/react` \+ `jsdom`. A sample test (`App.test.tsx`) must pass. |
+| **Git hooks** | **Lefthook** pre-commit running: `eslint --max-warnings 0`, `prettier --check`, `tailwindcss --config ./tailwind.config.ts --content "./src/**/*.{tsx,ts}" --dry-run`, and `markdownlint`. |
+| **Scripts** | `dev`, `build`, `preview`, `test`, `lint`, `format`, `prepare` (runs `lefthook install`). |
+| **Editor config** | Provide **`.editorconfig`** mirroring Prettier rules. |
+| **CI** | (Full CI is ticket 1-4.) For now, **ensure the default GitHub Action produced by `pnpm dlx create-vite@latest` is removed**—no CI changes yet. |
+| **Brand fonts** | Add Google Fonts import for **Cormorant Garamond** (semibold) & **Inter** (extrabold) to `index.css`. |
+| **Readme** | 60-second setup guide: **prereqs, `pnpm i`, `pnpm dev`**. |
+
+---
+
+#### **3\. Step-by-Step Tasks**
+
+1. **Create repo** named `paramind-lms-v2` or check if already properly created (leave remote blank; CI added later).
+
+2. `pnpm dlx create-vite@latest paramind-lms-v2 -- --template react-ts` → move into folder.
+
+**Install deps**
+
+ bash  
+CopyEdit  
+`pnpm add -D tailwindcss postcss autoprefixer @tailwindcss/typography eslint prettier eslint-config-prettier eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-tailwindcss eslint-plugin-simple-import-sort @typescript-eslint/eslint-plugin @typescript-eslint/parser lefthook vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event`  
+`pnpm add @radix-ui/react-slot # needed by shadcn/ui`
+
+3.   
+4. `npx tailwindcss init -p` → extend config with Night/Day colour tokens and shadcn preset.
+
+5. Add **`src/lib/tokens.css`** defining CSS custom properties from Brand blueprint; import in root `main.tsx`.
+
+6. Run `npx shadcn-ui@latest init` with defaults above; generate one sample component (`Button`) to prove integration.
+
+7. Replace scaffold content:
+
+   * **`App.tsx`** → simple heading “Paramind LMS bootstrap OK” using shadcn `Button`.
+
+   * **`index.css`** → Tailwind base/imports \+ font-family declarations.
+
+8. **Testing**: write `App.test.tsx` asserting heading text present. Configure Vitest (`vitest.config.ts`) with `globals:true` & `environment: "jsdom"`.
+
+9. **Linting & formatting**:
+
+   * Write `.eslintrc.cjs` (extends plugin sets, `tailwindcss/classnames-order` rule on).
+
+   * Write `.prettierrc.json` (2-space, semi, singleQuote).
+
+10. **Lefthook**: add `.lefthook.yml` with the commands in Constraints table; run `pnpm dlx lefthook install`.
+
+11. **Scripts** in `package.json` – ensure `"test": "vitest run"`.
+
+12. **Verification**:
+
+    * `pnpm dev` serves on port 5173 with no ESLint or TS errors in console.
+
+    * `pnpm test` shows 1 passing test.
+
+    * `git commit -m "feat: repo bootstrap"` triggers Lefthook and passes.
+
+13. Push branch **`1-1-repo-bootstrap`**; open PR titled **“1-1 Repo bootstrap – Vite \+ Tailwind \+ shadcn”**.
+
+---
+
+#### **4\. Acceptance Checklist (coding agent must tick)**
+
+* `pnpm dev` renders React starter page with brand fonts & tokens.
+
+* `pnpm test` passes (Vitest).
+
+* `eslint .` returns **0 errors, 0 warnings**.
+
+* Pre-commit Lefthook executes and passes locally.
+
+* Repository has **no unused scaffold files** (e.g., `App.css`, `index.css` default).
+
+* README quick-start present.
+
+* All changes confined to repo bootstrap; no CI workflows yet.
+
+---
+
+#### **5\. Guardrails & Hints**
+
+* **Keep time budget ≤ 1 agent-hour** by scripting installs in one command.
+
+* Follow **semantic-commit messages** (`feat:` for new files).
+
+* If Tailwind IntelliSense complains after shadcn install, run `pnpm dlx shadcn-ui@latest add component button --path src/components/ui`.
+
+* Use **absolute imports via `@/`** alias configured in `tsconfig.json` (`"paths": { "@/\\*": ["src/*"] }`).
+
+* Do **not** commit generated lock-file diffs for multiple package managers—**pnpm-lock.yaml only**.
+
+* Remember future tickets will add Supabase, routing, testing pipelines—keep folder structure clean: `src/components`, `src/lib`, `src/routes` (empty for now).
+
+---
+
+**Deliver exactly one PR that meets the Acceptance Checklist.**

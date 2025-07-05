@@ -1,12 +1,12 @@
 # Paramind LMS – Comprehensive Design & Technical Brief (v0.2)
 
-*Last updated: 5 July 2025*
+_Last updated: 5 July 2025_
 
 ---
 
 ## 0 · Essence
 
-> **“A visual, prerequisite‑aware roadmap that lets paramedicine students *****see***** their knowledge grow node‑by‑node—while instructors quietly track, coach, and fine‑tune every step.”**
+> **“A visual, prerequisite‑aware roadmap that lets paramedicine students \*\*\***see**\*** their knowledge grow node‑by‑node—while instructors quietly track, coach, and fine‑tune every step.”\*\*
 
 Paramind LMS is a desktop‑first learning platform for Australian undergraduate and bridging paramedicine students. It centres on an interactive **skill‑tree dashboard** rendered with React Flow, supports rich HTML lessons, and bakes in spaced‑repetition, progress analytics, and a lightweight tutor inbox.
 
@@ -30,7 +30,7 @@ Paramind LMS is a desktop‑first learning platform for Australian undergraduate
 | **Rendering library** | React Flow (pan + zoom, static node layout).                                                                                                                                                                                                                |
 | **Layout source**     | Mermaid diagram ⇢ exported JSON ⇢ React Flow nodes/edges.                                                                                                                                                                                                   |
 | **Static layout**     | Users cannot rearrange nodes. Scroll wheel = zoom; click‑drag = pan.                                                                                                                                                                                        |
-| **Prerequisite rule** | *Exactly‑all* inbound prerequisites required.                                                                                                                                                                                                               |
+| **Prerequisite rule** | _Exactly‑all_ inbound prerequisites required.                                                                                                                                                                                                               |
 | **Clusters**          | Defined in Mermaid using `subgraph`. All nodes inside a cluster unlock simultaneously once shared prerequisites are met. Each still requires individual completion before downstream nodes unlock. Visual: cluster enclosed in a subtle rounded‑corner box. |
 | **Node states**       | 🔒 Locked · ○ Unlocked/In‑progress · ● Completed (accent tone). Edges colour‑shift with source node.                                                                                                                                                        |
 | **Themes**            | Light & dark themes (automatic via OS pref). Accent colour palette differs per theme but fixed for all users.                                                                                                                                               |
@@ -50,19 +50,17 @@ Paramind LMS is a desktop‑first learning platform for Australian undergraduate
 | **Completion rule**        | All inline checks + ≥80 % on end‑quiz. Unlimited retries.                                                                                                                    |
 | **Attempt logging**        | All attempts (score + timestamp) stored; UI shows best score only.                                                                                                           |
 
-
-
-### 3.1 Lesson Viewer UX *(desktop‑first, keyboard & screen‑reader friendly)*
+### 3.1 Lesson Viewer UX _(desktop‑first, keyboard & screen‑reader friendly)_
 
 | Zone                             | Specification                                                                                                                                                                                                                                                                                                                                                                                                    |
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Global top navbar**            | • **Left:** Logo (click→Dashboard). • **Centre:** **Dashboard** & **Reviews** links. • **Right:** *Ask a Tutor* button ➜ opens learner’s global thread; profile avatar dropdown (Settings, Log out). • **Sticky:** Compresses to 56 px on scroll past lesson header (logo shrinks, nav text hides on hover). • **Theme:** Uses inverted accent tint per light/dark, but success/error greens/reds stay constant. |
-| **Lesson header banner**         | Sits below navbar. Lists: *Objectives*, *Estimated time* (e.g., “12 min”), *Prerequisites met* ✓/✗, *Last updated*, *Tags*.                                                                                                                                                                                                                                                                                      |
-| **Collapsible contents sidebar** | Auto‑opens ≥1024 px width; hamburger toggle below 1024 px. Live‑highlight current H2/H3 as learner scrolls. Knowledge‑check pips ✔ appear beside headings once completed.                                                                                                                                                                                                                                        |
+| **Global top navbar**            | • **Left:** Logo (click→Dashboard). • **Centre:** **Dashboard** & **Reviews** links. • **Right:** _Ask a Tutor_ button ➜ opens learner’s global thread; profile avatar dropdown (Settings, Log out). • **Sticky:** Compresses to 56 px on scroll past lesson header (logo shrinks, nav text hides on hover). • **Theme:** Uses inverted accent tint per light/dark, but success/error greens/reds stay constant. |
+| **Lesson header banner**         | Sits below navbar. Lists: _Objectives_, _Estimated time_ (e.g., “12 min”), _Prerequisites met_ ✓/✗, _Last updated_, _Tags_.                                                                                                                                                                                                                                                                                      |
+| **Collapsible contents sidebar** | Auto‑opens ≥1024 px width; hamburger toggle below 1024 px. Live‑highlight current H2/H3 as learner scrolls. Knowledge‑check pips ✔ appear beside headings once completed.                                                                                                                                                                                                                                       |
 | **Inline knowledge checks**      | Author‑placed `<knowledge-check>` blocks. Immediate feedback pops below card; page scroll is locked until correct answer chosen (error toast on wrong pick). Unlimited retries; completion state persisted in DB so reload keeps green tick.                                                                                                                                                                     |
 | **Lesson progress bar**          | 3 px accent strip stuck to bottom edge of navbar; width driven by **scroll depth gated by completed checks** (i.e., learners can’t game progress by scrolling until they answer locked check).                                                                                                                                                                                                                   |
-| **Completion quiz**              | Renders in a dedicated `<section id="quiz">` collapsed behind a **Start Quiz** button that unlocks once *all* inline checks done. Full‑width modal overlay on click. Feedback & explanations shown on submission summary screen; learner clicks **Finish** to return (best score stored).                                                                                                                        |
-| **Media blocks**                 | Custom React `<MediaPlayer>` skin for consistency (supersets HTML5). • Video: autoplay allowed, muted; global *Disable autoplay* toggle in Settings. • Audio: click‑to‑play. • Captions/alt required on publish.                                                                                                                                                                                                 |
+| **Completion quiz**              | Renders in a dedicated `<section id="quiz">` collapsed behind a **Start Quiz** button that unlocks once _all_ inline checks done. Full‑width modal overlay on click. Feedback & explanations shown on submission summary screen; learner clicks **Finish** to return (best score stored).                                                                                                                        |
+| **Media blocks**                 | Custom React `<MediaPlayer>` skin for consistency (supersets HTML5). • Video: autoplay allowed, muted; global _Disable autoplay_ toggle in Settings. • Audio: click‑to‑play. • Captions/alt required on publish.                                                                                                                                                                                                 |
 | **Keyboard shortcuts**           | `N` next heading, `P` previous, `K` focus next knowledge check, `Q` jump to quiz, `?` help sheet. All buttons have tabindex.                                                                                                                                                                                                                                                                                     |
 | **Accessibility**                | Sidebar collapses by default for screen‑reader “skip nav”; ARIA landmarks (`role="navigation"`, `main`, `complementary`). Knowledge‑check correctness announced via `aria-live="assertive"`.                                                                                                                                                                                                                     |
 | **Responsive notes**             | Content column max‑width 720 px; sidebar becomes slide‑over on ≤768 px.                                                                                                                                                                                                                                                                                                                                          |
@@ -74,17 +72,15 @@ Paramind LMS is a desktop‑first learning platform for Australian undergraduate
 | Aspect             | Spec                                                                                                                                                                                 |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Algorithm**      | FSRS default parameters. Learner slider options:• **Fewer reviews** → ease × 0.85; stability × 0.9• **Normal** → algorithm baseline• **More reviews** → ease × 1.15; stability × 1.1 |
-| **Card pool**      | Missed end‑quiz questions + any items the learner flags. Tutors can mark items *exclude from SR*.                                                                                    |
-| **Review UI**      | Dedicated **Review** tab; shows *Due* count badge.                                                                                                                                   |
+| **Card pool**      | Missed end‑quiz questions + any items the learner flags. Tutors can mark items _exclude from SR_.                                                                                    |
+| **Review UI**      | Dedicated **Review** tab; shows _Due_ count badge.                                                                                                                                   |
 | **Daily rollover** | Learner‑configurable local midnight (preset to their device TZ).                                                                                                                     |
 | **Streak counter** | Increments when learner completes **any** activity (review card, knowledge check, quiz) on a calendar day.                                                                           |
 | **Badges**         | • 7, 30, 90‑day streaks • 25/50/100 nodes complete • 100 % branch completion. Minimal line‑art icons.                                                                                |
 
-
-
 ### 4.1 Review Screen UX
 
-*(Keyboard‑friendly & screen‑reader‑ready)*
+_(Keyboard‑friendly & screen‑reader‑ready)_
 
 | Step              | Interaction & UI details                                                                                        |
 | ----------------- | --------------------------------------------------------------------------------------------------------------- |
@@ -92,10 +88,10 @@ Paramind LMS is a desktop‑first learning platform for Australian undergraduate
 | **Card view**     | Single central card• Top bar progress `(6 / 12)`• Prompt side shown first.                                      |
 | **Reveal**        | Click **Show Answer** or press **Space**/**Enter** triggers a CSS flip.                                         |
 | **Rate recall**   | Four buttons appear: **Again (0 min)**, **Hard**, **Good**, **Easy**. Hotkeys 1‑4.                              |
-| **Extra info**    | Optional *Explanation* accordion; link back to source lesson; last‑seen timestamp.                              |
+| **Extra info**    | Optional _Explanation_ accordion; link back to source lesson; last‑seen timestamp.                              |
 | **Queue flow**    | Next card loads instantly. On completion → confetti + modal summary (cards reviewed, % correct, next‑due time). |
-| **Sidebar tools** | Collapsible panel (`S`) with *Flag*, *Edit*, *Remove from queue*.                                               |
-| **Pause/Snooze**  | `Esc` opens pause modal with *Resume* / *Snooze 10 min*.                                                        |
+| **Sidebar tools** | Collapsible panel (`S`) with _Flag_, _Edit_, _Remove from queue_.                                               |
+| **Pause/Snooze**  | `Esc` opens pause modal with _Resume_ / _Snooze 10 min_.                                                        |
 | **Responsive**    | Full desktop; graceful down to 600 px for quick mobile review.                                                  |
 | **Accessibility** | ARIA live region announces flips; focus rings high‑contrast; all actions reachable via keyboard.                |
 
@@ -114,7 +110,7 @@ Paramind LMS is a desktop‑first learning platform for Australian undergraduate
 | Feature              | Spec                                                                                                               |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | **Ask‑Tutor button** | Appends message to learner’s single global thread (thread carries lesson reference metadata). Purely asynchronous. |
-| **Tutor inbox**      | Lists threads, filter by *unanswered*. Tutors can reply, close, or tag.                                            |
+| **Tutor inbox**      | Lists threads, filter by _unanswered_. Tutors can reply, close, or tag.                                            |
 | **Notifications**    | In‑app toasts + drawer. Email via Supabase/Postmark. Toggles: • Reviews due • New tutor reply.                     |
 
 ---
@@ -146,14 +142,14 @@ Deployed to Supabase Edge Functions (SSR optional), served via global CDN.
 
 ### 8.2 Back End & Data
 
-| Layer             | Tech                                                                             | Notes                                                            |
-| ----------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| **Auth**          | Supabase Auth (email + Google OAuth)                                             | Row‑level security policies.                                     |
-| **Relational DB** | Postgres (Supabase)                                                              | Core tables: users, lessons, nodes, attempts, SR\_cards, badges. |
-| **Files**         | Supabase Storage (S3‑compatible)                                                 | Public read, private write.                                      |
-| **Graph queries** | SQL adjacency list; consider `ltree` or `pgvector` if path queries grow.         |                                                                  |
-| **CI/CD**         | GitHub → Supabase auto deploy; PR preview URLs. Axe/Lighthouse runs in workflow. |                                                                  |
-| **Email**         | Supabase‑managed Postmark.                                                       |                                                                  |
+| Layer             | Tech                                                                             | Notes                                                           |
+| ----------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| **Auth**          | Supabase Auth (email + Google OAuth)                                             | Row‑level security policies.                                    |
+| **Relational DB** | Postgres (Supabase)                                                              | Core tables: users, lessons, nodes, attempts, SR_cards, badges. |
+| **Files**         | Supabase Storage (S3‑compatible)                                                 | Public read, private write.                                     |
+| **Graph queries** | SQL adjacency list; consider `ltree` or `pgvector` if path queries grow.         |                                                                 |
+| **CI/CD**         | GitHub → Supabase auto deploy; PR preview URLs. Axe/Lighthouse runs in workflow. |                                                                 |
+| **Email**         | Supabase‑managed Postmark.                                                       |                                                                 |
 
 ### 8.3 Ops
 
@@ -197,7 +193,7 @@ Deployed to Supabase Edge Functions (SSR optional), served via global CDN.
 | **Progress bar calc**                                                                                | `progress = clamp((scrollY + viewportH) / (docH - footerH), 0, 1)` ➜ width %. Update only when learner has cleared preceding knowledge‑check anchor.       |
 | **Email schedule**                                                                                   | Reviews‑due digest at 07:00 local; bulk digest (if > 5 items) at 19:00 local via **Postmark sandbox** (limit 100 emails/day)                               |
 | Reviews‑due digest at 07:00 local; bulk digest (if > 5 items) at 19:00 local via SendGrid batch 500. |                                                                                                                                                            |
-| **Anonymised exports**                                                                               | Replace user\_id with SHA‑256(email + yearly salt). Remove names/email before CSV.                                                                         |
+| **Anonymised exports**                                                                               | Replace user_id with SHA‑256(email + yearly salt). Remove names/email before CSV.                                                                          |
 
 ## 8.8 · Developer Workflow & QA
 
@@ -266,7 +262,7 @@ Deployed to Supabase Edge Functions (SSR optional), served via global CDN.
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | **Glossary index**  | `/glossary` route: left search filter, alphabetical list, table showing term, short def, linked lessons count.               |
 | **Hover card**      | Width = 320 px; auto‑positions; closes with ESC; link "View in glossary".                                                    |
-| **Command palette** | `Ctrl/⌘ + K` opens shadcn/ui *Command* overlay; fuzzy‑search lessons, nodes, glossary; arrow‑keys navigate; Enter navigates. |
+| **Command palette** | `Ctrl/⌘ + K` opens shadcn/ui _Command_ overlay; fuzzy‑search lessons, nodes, glossary; arrow‑keys navigate; Enter navigates. |
 
 ## 8.14 · Accessibility Notes (extra)
 
@@ -308,4 +304,3 @@ Route `/settings`, tabs:
 ---
 
 **End of Brief**
-
