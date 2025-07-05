@@ -22,28 +22,28 @@
 
 ### **1 · Declare CSS variables**
 
-*File: `src/styles/tokens.css` (imported in `main.tsx`)*
+_File: `src/styles/tokens.css` (imported in `main.tsx`)_
 
 /\* Night Study – default \*/  
 :root {  
-  \--pm-bg:        14 15 23;  
-  \--pm-surface:   27 29 41;  
-  \--pm-primary:  115 107 254;   /\* \#736BFE \*/  
-  \--pm-secondary: 255 182 110;  
-  \--pm-border:    255 255 255 / .08;  
-  \--pm-text-high: 255 255 255 / .95;  
-  \--pm-text-low:  255 255 255 / .68;  
+ \--pm-bg: 14 15 23;  
+ \--pm-surface: 27 29 41;  
+ \--pm-primary: 115 107 254; /\* \#736BFE \*/  
+ \--pm-secondary: 255 182 110;  
+ \--pm-border: 255 255 255 / .08;  
+ \--pm-text-high: 255 255 255 / .95;  
+ \--pm-text-low: 255 255 255 / .68;  
 }
 
 /\* Day Study theme toggle \*/  
 \[data-theme='day'\] {  
-  \--pm-bg:        245 247 249;  
-  \--pm-surface:   255 255 255;  
-  \--pm-primary:   46  95  92;   /\* \#2E5F5C \*/  
-  \--pm-secondary:  75  79 116;  
-  \--pm-border:     229 231 235;  
-  \--pm-text-high:  17  24  39;  
-  \--pm-text-low:   55  65  81;  
+ \--pm-bg: 245 247 249;  
+ \--pm-surface: 255 255 255;  
+ \--pm-primary: 46 95 92; /\* \#2E5F5C \*/  
+ \--pm-secondary: 75 79 116;  
+ \--pm-border: 229 231 235;  
+ \--pm-text-high: 17 24 39;  
+ \--pm-text-low: 55 65 81;  
 }
 
 RGB values come directly from the **starter palette** in the Brand-seed blueprint .
@@ -52,52 +52,52 @@ RGB values come directly from the **starter palette** in the Brand-seed blueprin
 
 ### **2 · Extend Tailwind config**
 
-*File: `tailwind.config.ts`*
+_File: `tailwind.config.ts`_
 
 import type { Config } from 'tailwindcss';
 
 const withOpacity \=  
-  (variable: string) \=\>  
-  ({ opacityValue }: { opacityValue?: string }) \=\>  
-    opacityValue \!== undefined  
-      ? \`rgb(var(${variable}) / ${opacityValue})\`  
+ (variable: string) \=\>  
+ ({ opacityValue }: { opacityValue?: string }) \=\>  
+ opacityValue \!== undefined  
+ ? \`rgb(var(${variable}) / ${opacityValue})\`  
       : \`rgb(var(${variable}))\`;
 
 export default {  
-  content: \['./index.html', './src/\*\*/\*.{ts,tsx,mdx}'\],  
-  theme: {  
-    extend: {  
-      colors: {  
-        bg:        withOpacity('--pm-bg'),  
-        surface:   withOpacity('--pm-surface'),  
-        primary:   withOpacity('--pm-primary'),  
-        secondary: withOpacity('--pm-secondary'),  
-        border:    withOpacity('--pm-border'),  
-        text: {  
-          high: withOpacity('--pm-text-high'),  
-          low:  withOpacity('--pm-text-low'),  
-        },  
-      },  
-      borderRadius: { card: '20px' },           // matches 20 px radius spec :contentReference\[oaicite:6\]{index=6}  
-      boxShadow: { card: '0 6px 24px rgba(0,0,0,.12)' },  
-      fontFamily: {  
-        display: \['Cormorant Garamond', 'serif'\],  
-        body:    \['Inter', 'ui-sans-serif', 'system-ui'\],  
-      },  
-    },  
-  },  
-  plugins: \[\],  
+ content: \['./index.html', './src/\*\*/\*.{ts,tsx,mdx}'\],  
+ theme: {  
+ extend: {  
+ colors: {  
+ bg: withOpacity('--pm-bg'),  
+ surface: withOpacity('--pm-surface'),  
+ primary: withOpacity('--pm-primary'),  
+ secondary: withOpacity('--pm-secondary'),  
+ border: withOpacity('--pm-border'),  
+ text: {  
+ high: withOpacity('--pm-text-high'),  
+ low: withOpacity('--pm-text-low'),  
+ },  
+ },  
+ borderRadius: { card: '20px' }, // matches 20 px radius spec :contentReference\[oaicite:6\]{index=6}  
+ boxShadow: { card: '0 6px 24px rgba(0,0,0,.12)' },  
+ fontFamily: {  
+ display: \['Cormorant Garamond', 'serif'\],  
+ body: \['Inter', 'ui-sans-serif', 'system-ui'\],  
+ },  
+ },  
+ },  
+ plugins: \[\],  
 } satisfies Config;
 
 ---
 
 ### **3 · Map to shadcn/ui variant helpers**
 
-*File: `src/lib/theme.ts`*
+_File: `src/lib/theme.ts`_
 
 export const buttonVariants \= {  
-  primary: 'bg-primary text-white hover:bg-primary/90 focus:ring-2 focus:ring-primary',  
-  ghost:   'text-primary hover:bg-primary/10 focus:ring-2 focus:ring-primary',  
+ primary: 'bg-primary text-white hover:bg-primary/90 focus:ring-2 focus:ring-primary',  
+ ghost: 'text-primary hover:bg-primary/10 focus:ring-2 focus:ring-primary',  
 };
 
 All future shadcn components must consume `buttonVariants`.
@@ -107,7 +107,7 @@ All future shadcn components must consume `buttonVariants`.
 ### **4 · Lint & CI guardrails**
 
 1. **Add `stylelint-config-standard` \+ `stylelint-plugin-design-tokens`.**  
-    *Rule:* `design-tokens/tokens { preset: "./src/styles/tokens.css" }` so only the tokens above pass lint .
+   _Rule:_ `design-tokens/tokens { preset: "./src/styles/tokens.css" }` so only the tokens above pass lint .
 
 2. Script `"lint:css": "stylelint \"src/**/*.{css,tsx}\""`; hook it into Lefthook \+ CI.
 
@@ -122,12 +122,11 @@ Add React hook `useTheme()` that toggles `data-theme="day"` on `<html>`; expose 
 ### **6 · Storybook \+ Chromatic baseline**
 
 1. If Storybook already exists from ticket 1-1, create **“Design Tokens”** page that shows:
+   - Background swatches
 
-   * Background swatches
+   - Primary vs secondary buttons
 
-   * Primary vs secondary buttons
-
-   * Card surface with text‐high / text-low samples
+   - Card surface with text‐high / text-low samples
 
 2. Publish to Chromatic so future visual regression picks up the palette (PR quality-gate plan) .
 
@@ -135,46 +134,46 @@ Add React hook `useTheme()` that toggles `data-theme="day"` on `<html>`; expose 
 
 ### **7 · Tests**
 
-*Vitest* – `tokens.spec.ts`
+_Vitest_ – `tokens.spec.ts`
 
 import config from '../../tailwind.config';  
 import resolveConfig from 'tailwindcss/resolveConfig';
 
 it('exposes primary colour', () \=\> {  
-  const full \= resolveConfig(config);  
-  expect(full.theme.colors.primary.DEFAULT).toBeDefined();  
+ const full \= resolveConfig(config);  
+ expect(full.theme.colors.primary.DEFAULT).toBeDefined();  
 });
 
 ---
 
 ### **8 · Docs**
 
-*README.md* – add **“Theme tokens”** section with a table linking token → CSS variable → Tailwind alias.
+_README.md_ – add **“Theme tokens”** section with a table linking token → CSS variable → Tailwind alias.
 
 ---
 
 ### **9 · Definition-of-Done (all must be ✅)**
 
-* `pnpm dev` shows identical UI but colours compile from CSS vars (check DevTools).
+- `pnpm dev` shows identical UI but colours compile from CSS vars (check DevTools).
 
-* `Shift+D` toggles day/night; Auth button swaps from `#736BFE` to `#2E5F5C`.
+- `Shift+D` toggles day/night; Auth button swaps from `#736BFE` to `#2E5F5C`.
 
-* `pnpm lint:css` passes (no hard-coded hex).
+- `pnpm lint:css` passes (no hard-coded hex).
 
-* Unit test above passes; overall Jest line-coverage still ≥ 70 %.
+- Unit test above passes; overall Jest line-coverage still ≥ 70 %.
 
-* Storybook “Design Tokens” page visible; Chromatic snapshot uploaded.
+- Storybook “Design Tokens” page visible; Chromatic snapshot uploaded.
 
-* Axe run shows **0 contrast violations** on both themes.
+- Axe run shows **0 contrast violations** on both themes.
 
-* PR merged into `dev` within the 45 min time-box.
+- PR merged into `dev` within the 45 min time-box.
 
 ---
 
 ### **10 · Out-of-scope**
 
-* No bespoke component redesigns yet (that’s Phase 9 polish).
+- No bespoke component redesigns yet (that’s Phase 9 polish).
 
-* No automatic OS-pref theme sync (Preferences page will own that).
+- No automatic OS-pref theme sync (Preferences page will own that).
 
-* No removal of placeholder styles outside palette/linkage work.
+- No removal of placeholder styles outside palette/linkage work.

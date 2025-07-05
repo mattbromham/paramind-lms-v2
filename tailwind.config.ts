@@ -12,21 +12,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg:        withOpacity('--pm-bg'),
-        surface:   withOpacity('--pm-surface'),
-        primary:   withOpacity('--pm-primary'),
+        bg: withOpacity('--pm-bg'),
+        surface: withOpacity('--pm-surface'),
+        primary: withOpacity('--pm-primary'),
         secondary: withOpacity('--pm-secondary'),
-        border:    withOpacity('--pm-border'),
+        border: withOpacity('--pm-border'),
         text: {
           high: withOpacity('--pm-text-high'),
-          low:  withOpacity('--pm-text-low'),
+          low: withOpacity('--pm-text-low'),
         },
       },
-      borderRadius: { card: '20px' },           // matches 20 px radius spec
+      borderRadius: { card: '20px' }, // matches 20 px radius spec
       boxShadow: { card: '0 6px 24px rgba(0,0,0,.12)' },
       fontFamily: {
         display: ['Cormorant Garamond', 'serif'],
-        body:    ['Inter', 'ui-sans-serif', 'system-ui'],
+        body: ['Inter', 'ui-sans-serif', 'system-ui'],
       },
     },
   },
