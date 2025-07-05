@@ -177,31 +177,27 @@ Deployed to Supabase Edge Functions (SSR optional), served via global CDN.
 
 ---
 
-## 8.6 · Data Model (initial schema)
+## 8.6 · Data Model (initial schema)\$1
 
-| Table                | Key columns (PK \*, FK →)                                                                                                       | Purpose                           |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| **users**\*          | id UUID\*, email UNIQ, name, auth\_provider, created\_at                                                                        | Accounts & auth provider metadata |
-| **lessons**\*        | id UUID\*, slug UNIQ, title, md\_content, est\_minutes, updated\_at                                                             | Lesson source + metadata          |
-| **nodes**\*          | id UUID\*, lesson\_id → lessons.id, cluster\_id TEXT, branch\_id TEXT, order\_idx INT, prereq\_ids UUID[]                       | Graph representation              |
-| **quiz\_attempts**\* | id UUID\*, user\_id → users.id, lesson\_id → lessons.id, score NUMERIC, answers JSONB, started\_at, finished\_at, is\_best BOOL | Full attempt history              |
-| **sr\_cards**\*      | id UUID\*, user\_id → users.id, node\_id → nodes.id, srs\_state JSONB                                                           | Per‑user spaced‑rep scheduling    |
-| **badges**\*         | id SERIAL\*, code TEXT UNIQ, name, svg\_path, threshold\_json                                                                   | Badge catalogue                   |
-| **user\_badges**\*   | user\_id → users.id, badge\_id → badges.id, earned\_at TIMESTAMP                                                                | Award log                         |
-| **chat\_threads**\*  | id UUID\*, user\_id → users.id, created\_at                                                                                     | Asynch tutor threads              |
-| **chat\_messages**\* | id UUID\*, thread\_id → chat\_threads.id, sender\_id → users.id, body TEXT, sent\_at                                            | Message bodies                    |
+### 8.6.1 Implementation status
 
-## 8.7 · Security, Limits & Compliance
+- **Deployed:** tables created in Supabase project `mupsfsdbeiqfezliapyn` with `pgcrypto` extension enabled (for `gen_random_uuid()`).
+- **Row‑Level Security:** RLS ON for every table with "minimum safe set" policies → `SELECT` and `INSERT` permitted for role `authenticated`.
+- **Storage:** bucket `media` (public read) exists for all lesson assets.
+- **Env files:** local `.env.local` holds `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`; `.env.local.example` committed as template.
 
-| Topic                  | Decision                                                                                                                                                   |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Auth flows**         | Password ≥ 12 chars incl. upper + lower + digit; email verification via magic‑link; Google OAuth scopes `profile email openid`; forgot‑pwd link TTL = 2 h. |
-| **Rate limits**        | Public API 100 req/min; quiz‑submit 10/min; chat 20 msgs/min. After 5× 429 responses ➜ 1 h cooling‑off.                                                    |
-| **Media formats**      | Accept: `.mp4 (H.264 + AAC)`, `.webm (VP9 + Opus)`, `.mp3`, `.wav`, `.png`, `.jpg`, `.svg`, `.gif`. CI auto‑transcodes video to 720p max via ffmpeg.       |
-| **File size caps**     | Images ≤ 5 MB, audio ≤ 10 MB, video ≤ 50 MB (warning at 80 %).                                                                                             |
-| **Progress bar calc**  | `progress = clamp((scrollY + viewportH) / (docH - footerH), 0, 1)` ➜ width %. Update only when learner has cleared preceding knowledge‑check anchor.       |
-| **Email schedule**     | Reviews‑due digest at 07:00 local; bulk digest (if > 5 items) at 19:00 local via SendGrid batch 500.                                                       |
-| **Anonymised exports** | Replace user\_id with SHA‑256(email + yearly salt). Remove names/email before CSV.                                                                         |
+## 8.7 · Security, Limits & Compliance · Security, Limits & Compliance
+
+| Topic                                                                                                | Decision                                                                                                                                                   |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Auth flows**                                                                                       | Password ≥ 12 chars incl. upper + lower + digit; email verification via magic‑link; Google OAuth scopes `profile email openid`; forgot‑pwd link TTL = 2 h. |
+| **Rate limits**                                                                                      | Public API 100 req/min; quiz‑submit 10/min; chat 20 msgs/min. After 5× 429 responses ➜ 1 h cooling‑off.                                                    |
+| **Media formats**                                                                                    | Accept: `.mp4 (H.264 + AAC)`, `.webm (VP9 + Opus)`, `.mp3`, `.wav`, `.png`, `.jpg`, `.svg`, `.gif`. CI auto‑transcodes video to 720p max via ffmpeg.       |
+| **File size caps**                                                                                   | Images ≤ 5 MB, audio ≤ 10 MB, video ≤ 50 MB (warning at 80 %).                                                                                             |
+| **Progress bar calc**                                                                                | `progress = clamp((scrollY + viewportH) / (docH - footerH), 0, 1)` ➜ width %. Update only when learner has cleared preceding knowledge‑check anchor.       |
+| **Email schedule**                                                                                   | Reviews‑due digest at 07:00 local; bulk digest (if > 5 items) at 19:00 local via **Postmark sandbox** (limit 100 emails/day)                               |
+| Reviews‑due digest at 07:00 local; bulk digest (if > 5 items) at 19:00 local via SendGrid batch 500. |                                                                                                                                                            |
+| **Anonymised exports**                                                                               | Replace user\_id with SHA‑256(email + yearly salt). Remove names/email before CSV.                                                                         |
 
 ## 8.8 · Developer Workflow & QA
 
