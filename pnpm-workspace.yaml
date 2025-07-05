@@ -1,3 +1,6 @@
 ignoredBuiltDependencies:
   - esbuild
   - lefthook
+
+onlyBuiltDependencies:
+  - chromedriver

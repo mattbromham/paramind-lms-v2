@@ -15,6 +15,7 @@ export default {
         bg: withOpacity('--pm-bg'),
         surface: withOpacity('--pm-surface'),
         primary: withOpacity('--pm-primary'),
+        'primary-foreground': withOpacity('--pm-primary-foreground'),
         secondary: withOpacity('--pm-secondary'),
         border: withOpacity('--pm-border'),
         text: {

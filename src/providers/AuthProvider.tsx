@@ -16,4 +16,5 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
 }
 
 // Re-export useSession for convenient imports
+// eslint-disable-next-line react-refresh/only-export-components
 export { useSession };
