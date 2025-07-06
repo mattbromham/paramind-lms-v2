@@ -10,6 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: contains(github.event.issue.labels.*.name, 'audit')
+    services:
+      supabase:
+        image: supabase/postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     strategy:
       matrix:
         include:
@@ -51,8 +65,12 @@ jobs:
 
       - name: Run Test Coverage (A-2)
         if: contains(github.event.issue.labels.*.name, 'agent:test-cover')
+        env:
+          VITE_SUPABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+          VITE_SUPABASE_ANON_KEY: local-test-anon-key
         run: |
           echo "🧪 Running Test Coverage..."
+          echo "🔗 Supabase URL: $VITE_SUPABASE_URL"
           pnpm test --run
           pnpm vitest run --coverage
           echo "✅ Test coverage completed"
