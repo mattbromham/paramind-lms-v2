@@ -94,7 +94,8 @@
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -129,7 +130,8 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">25x</span></td><td class="text"><pre class="prettyprint lang-js">import { SupabaseClient } from '@supabase/supabase-js';
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { SupabaseClient } from '@supabase/supabase-js';
 import { useQuery } from '@tanstack/react-query';
 &nbsp;
 import { normalizeSupabaseError } from '@/lib/normalizeSupabaseError';
@@ -141,7 +143,7 @@ import { Node } from './types';
 /**
  * Hook to fetch all nodes accessible to the current user.
  * Returns all nodes for authenticated users via Row-Level Security.
- * 
+ *
  * @param client - Optional Supabase client for dependency injection (defaults to getSupabase())
  * @returns React Query result with nodes data and loading/error states
  */
@@ -150,7 +152,7 @@ export const useNodes = (client?: SupabaseClient&lt;Database&gt;) =&gt; {
     queryKey: ['nodes'],
     queryFn: async (): Promise&lt;Node[]&gt; =&gt; {
       const supabase = client || getSupabase();
-      
+&nbsp;
       try {
         const { data } = await supabase
           .from('nodes')
@@ -164,7 +166,8 @@ export const useNodes = (client?: SupabaseClient&lt;Database&gt;) =&gt; {
     },
     staleTime: 5 * 60_000, // 5 minutes as specified
   });
-}; </pre></td></tr></table></pre>
+};
+&nbsp;</pre></td></tr></table></pre>
 
       <div class="push"></div>
       <!-- for sticky footer -->
@@ -178,7 +181,7 @@ export const useNodes = (client?: SupabaseClient&lt;Database&gt;) =&gt; {
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-07-06T05:38:45.150Z
+      at 2025-07-06T06:10:43.209Z
     </div>
     <script src="../prettify.js"></script>
     <script>
