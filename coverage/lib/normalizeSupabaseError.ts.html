@@ -23,15 +23,15 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">68.75% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">11/16</span>
+            <span class="fraction">18/18</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">80% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Branches</span>
-            <span class="fraction">8/10</span>
+            <span class="fraction">15/15</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -41,9 +41,9 @@
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">68.75% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">11/16</span>
+            <span class="fraction">18/18</span>
           </div>
         </div>
         <p class="quiet">
@@ -57,7 +57,7 @@
           </div>
         </template>
       </div>
-      <div class="status-line medium"></div>
+      <div class="status-line high"></div>
       <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -91,7 +91,10 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -100,38 +103,43 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { AuthError, PostgrestError } from '@supabase/supabase-js';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { AuthError, PostgrestError } from '@supabase/supabase-js';
 &nbsp;
 /**
  * Normalizes Supabase errors into user-friendly Error objects.
- * 
+ *
  * @param error - The error from Supabase (PostgrestError or AuthError)
  * @returns A normalized Error object with appropriate message
  */
-export function normalizeSupabaseError(error: PostgrestError | AuthError | Error): Error {
+export function normalizeSupabaseError(
+  error: PostgrestError | AuthError | Error
+): Error {
   // If it's already a generic Error, return as-is
   if (error instanceof Error &amp;&amp; !('code' in error)) {
     return error;
@@ -143,19 +151,20 @@ export function normalizeSupabaseError(error: PostgrestError | AuthError | Error
     if (error.code === '42501') {
       return new Error('Access denied');
     }
-    
+&nbsp;
     // Other PostgreSQL errors - use the error message
-    return new Error(error.<span class="branch-0 cbranch-no" title="branch not covered" >message || 'Database error')</span>;
-<span class="branch-0 cbranch-no" title="branch not covered" >  }</span>
+    return new Error(error.message || 'Database error');
+  }
 &nbsp;
   // Handle AuthError
-<span class="cstat-no" title="statement not covered" >  if (error instanceof AuthError) {</span>
-<span class="cstat-no" title="statement not covered" >    return new Error(error.message || 'Authentication error');</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  if (error instanceof AuthError) {
+    return new Error(error.message || 'Authentication error');
+  }
 &nbsp;
   // Fallback for any other error type
-<span class="cstat-no" title="statement not covered" >  return new Error('An unexpected error occurred');</span>
-<span class="cstat-no" title="statement not covered" >} </span></pre></td></tr></table></pre>
+  return new Error('An unexpected error occurred');
+}
+&nbsp;</pre></td></tr></table></pre>
 
       <div class="push"></div>
       <!-- for sticky footer -->
@@ -169,7 +178,7 @@ export function normalizeSupabaseError(error: PostgrestError | AuthError | Error
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-07-06T05:38:45.150Z
+      at 2025-07-06T06:10:43.209Z
     </div>
     <script src="../prettify.js"></script>
     <script>
