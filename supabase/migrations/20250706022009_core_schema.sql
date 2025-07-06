@@ -182,6 +182,15 @@ CREATE TRIGGER badges_updated_at_trigger
 -- Enable RLS
 ALTER TABLE badges ENABLE ROW LEVEL SECURITY;
 
+-- ====================================
+-- 7. Utility functions
+-- ====================================
+-- Ping function for health checks
+CREATE OR REPLACE FUNCTION ping() RETURNS TEXT
+LANGUAGE SQL STABLE AS $$
+  SELECT 'pong';
+$$;
+
 COMMIT;
 
 -- ====================================
