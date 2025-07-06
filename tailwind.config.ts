@@ -9,6 +9,7 @@ const withOpacity =
 
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx,mdx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -28,6 +29,9 @@ export default {
       fontFamily: {
         display: ['Cormorant Garamond', 'serif'],
         body: ['Inter', 'ui-sans-serif', 'system-ui'],
+      },
+      screens: {
+        'lg': '1024px',
       },
     },
   },

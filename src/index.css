@@ -1,10 +1,8 @@
+@import 'tailwindcss';
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Force generate responsive navigation classes */
+@source inline("hidden lg:flex lg:hidden lg:gap-6 max-lg:hidden gap-4 list-none items-center flex");
 
 @layer base {
   :root {
